@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Libyuv</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="btn1">RGBA转YUV</string>
+    <string name="btn2">YUV转RGBA</string>
+    <string name="btn3">YUV转NV21和NV12</string>
+    <string name="btn4">YUV420SP缩放</string>
+    <string name="btn5">YUV420SP旋转</string>
+</resources>
