@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity{
             FileInputStream fis=new FileInputStream(file);
             fis.read(src,0,width*height*3/2);
             //420p转nv21
-            YuvUtils.NV21ToI420Rotate(src,width,height,dst,Key.ROTATE_90);
+            YuvUtils.NV21ToI420Rotate(src,width,height,dst,Key.ROTATE_90,false);
             File file1=new File(getExternalFilesDir(null).getAbsolutePath()+"/cache_nv21_rotate.yuv");
             OutputStream os1 = new FileOutputStream(file1);
             os1.write(dst);
