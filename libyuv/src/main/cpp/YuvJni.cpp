@@ -1,6 +1,3 @@
-//
-// Created by aiya on 2017/7/24.
-//
 #include <assert.h>
 #include "libyuv.h"
 #include "jni.h"
@@ -44,8 +41,8 @@ int rgbaToI420(JNIEnv * env,jclass clazz,jbyteArray rgba,jint rgba_stride,
     int ret=func((const uint8 *) rgbaData, rgba_stride, (uint8 *) yuvData, y_stride,
                  (uint8 *) (yuvData) + ySize, u_stride, (uint8 *) (yuvData )+ ySize + uSize,
                  v_stride, width, height);
-    env->ReleaseByteArrayElements(rgba,rgbaData,JNI_ABORT);
-    env->ReleaseByteArrayElements(yuv,yuvData,JNI_ABORT);
+    env->ReleaseByteArrayElements(rgba,rgbaData,JNI_OK);
+    env->ReleaseByteArrayElements(yuv,yuvData,JNI_OK);
     return ret;
 }
 
@@ -60,8 +57,8 @@ int i420ToRgba(JNIEnv * env,jclass clazz,jbyteArray yuv,jint y_stride,jint u_str
     int ret=func((const uint8 *) yuvData, y_stride, (uint8 *) yuvData + ySize, u_stride,
                  (uint8 *) (yuvData)+ ySize + uSize, v_stride, (uint8 *) (rgbaData),
                  rgba_stride, width, height);
-    env->ReleaseByteArrayElements(rgba,rgbaData,JNI_ABORT);
-    env->ReleaseByteArrayElements(yuv,yuvData,JNI_ABORT);
+    env->ReleaseByteArrayElements(rgba,rgbaData,JNI_OK);
+    env->ReleaseByteArrayElements(yuv,yuvData,JNI_OK);
     return ret;
 }
 
@@ -75,8 +72,8 @@ int Jni_I420ToNV21(JNIEnv * env,jclass clazz,jbyteArray yuv420p,jbyteArray yuv42
                        (const uint8 *) (yuv420pData + ySize + stride[swapUV]), width >> 1,
                        (const uint8 *) (yuv420pData + ySize + stride[1-swapUV]), width >> 1,
                        (uint8 *) yuv420spData, width, (uint8 *) (yuv420spData + ySize), width, width, height);
-    env->ReleaseByteArrayElements(yuv420p,yuv420pData,JNI_ABORT);
-    env->ReleaseByteArrayElements(yuv420sp,yuv420spData,JNI_ABORT);
+    env->ReleaseByteArrayElements(yuv420p,yuv420pData,JNI_OK);
+    env->ReleaseByteArrayElements(yuv420sp,yuv420spData,JNI_OK);
     return ret;
 }
 
@@ -90,8 +87,8 @@ int Jni_NV21ToI420(JNIEnv * env,jclass clazz,jbyteArray yuv420p,jbyteArray yuv42
                                (uint8 *) yuv420pData, width,
                                (uint8 *) (yuv420pData + ySize + stride[swapUV]), width >> 1,
                                (uint8 *) (yuv420pData + ySize + stride[1-swapUV]), width >> 1, width, height);
-    env->ReleaseByteArrayElements(yuv420p,yuv420pData,JNI_ABORT);
-    env->ReleaseByteArrayElements(yuv420sp,yuv420spData,JNI_ABORT);
+    env->ReleaseByteArrayElements(yuv420p,yuv420pData,JNI_OK);
+    env->ReleaseByteArrayElements(yuv420sp,yuv420spData,JNI_OK);
     return ret;
 }
 
@@ -105,8 +102,8 @@ void Jni_NV21Scale(JNIEnv * env,jclass clazz,jbyteArray src,jint width,jint heig
     libyuv::ScalePlane((const uint8 *)(srcData+ySize) , width, width, height>>1,
                        (uint8 *)(dstData+dstYSize), dst_width, dst_width, dst_height>>1,
                        (libyuv::FilterMode) mode);
-    env->ReleaseByteArrayElements(src,srcData,JNI_ABORT);
-    env->ReleaseByteArrayElements(dst,dstData,JNI_ABORT);
+    env->ReleaseByteArrayElements(src,srcData,JNI_OK);
+    env->ReleaseByteArrayElements(dst,dstData,JNI_OK);
 }
 
 void Jni_I420Scale(JNIEnv * env,jclass clazz,jbyteArray src,jint width,jint height,jbyteArray dst,jint dst_width,jint dst_height,int mode,jboolean swapUV){
@@ -120,8 +117,8 @@ void Jni_I420Scale(JNIEnv * env,jclass clazz,jbyteArray src,jint width,jint heig
                       (uint8 *) dstData, dst_width, (uint8 *) (dstData + dstYSize+swap[swapUV]), dst_width >> 1,
                       (uint8 *) (dstData + dstYSize + swap[1-swapUV]), dst_width >> 1,
                       dst_width, dst_height, (libyuv::FilterMode) mode);
-    env->ReleaseByteArrayElements(src,srcData,JNI_ABORT);
-    env->ReleaseByteArrayElements(dst,dstData,JNI_ABORT);
+    env->ReleaseByteArrayElements(src,srcData,JNI_OK);
+    env->ReleaseByteArrayElements(dst,dstData,JNI_OK);
 }
 
 void Jni_RgbaScale(JNIEnv * env,jclass clazz,jint type,jbyteArray src,jint src_width,jint src_height,jbyteArray dst,jint dst_width,jint dst_height,jint mode){
@@ -131,8 +128,8 @@ void Jni_RgbaScale(JNIEnv * env,jclass clazz,jint type,jbyteArray src,jint src_w
     libyuv::ARGBScale((const uint8 *) srcData, bytes * src_width, src_width, src_height,
                       (uint8 *) dstData, bytes*dst_width, dst_width, dst_height,
                       (libyuv::FilterMode) mode);
-    env->ReleaseByteArrayElements(src,srcData,JNI_ABORT);
-    env->ReleaseByteArrayElements(dst,dstData,JNI_ABORT);
+    env->ReleaseByteArrayElements(src,srcData,JNI_OK);
+    env->ReleaseByteArrayElements(dst,dstData,JNI_OK);
 }
 
 void Jni_NV21ToI420Rotate(JNIEnv * env,jclass clazz,jbyteArray src,jint width,jint height,jbyteArray dst,jint de,jboolean swapUV){
@@ -144,8 +141,8 @@ void Jni_NV21ToI420Rotate(JNIEnv * env,jclass clazz,jbyteArray src,jint width,ji
     rotatePlaneFunc[de]((const uint8 *) srcData, width, (uint8 *) dstData, dst_stride[de], width, height);
     rotateUVFunc[de]((const uint8 *) (srcData+ySize), width, (uint8 *)(dstData+ySize+swap[swapUV]), dst_stride[de]>>1,
                      (uint8*)(dstData+ySize+swap[1-swapUV]),dst_stride[de]>>1,width>>1, height>>1);
-    env->ReleaseByteArrayElements(src,srcData,JNI_ABORT);
-    env->ReleaseByteArrayElements(dst,dstData,JNI_ABORT);
+    env->ReleaseByteArrayElements(src,srcData,JNI_OK);
+    env->ReleaseByteArrayElements(dst,dstData,JNI_OK);
 }
 
 int Jni_RgbaToI420WithStride(JNIEnv * env,jclass clazz,jint type,jbyteArray rgba,jint rgba_stride,

@@ -6,5 +6,5 @@
     <string name="btn2">YUV转RGBA</string>
     <string name="btn3">YUV转NV21和NV12</string>
     <string name="btn4">YUV420SP缩放</string>
-    <string name="btn5">YUV420SP旋转</string>
+    <string name="btn5">YUV420SP旋转转NV21</string>
 </resources>

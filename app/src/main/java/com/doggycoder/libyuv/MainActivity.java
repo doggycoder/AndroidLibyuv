@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
                     ByteBuffer buffer=ByteBuffer.allocate(bitmap.getWidth()*bitmap.getHeight()*4);
                     bitmap.copyPixelsToBuffer(buffer);
                     byte[] yuvData=new byte[bitmap.getWidth()*bitmap.getHeight()*3/2];
-                    YuvUtils.RgbaToI420(Key.RGBA_TO_I420,buffer.array(),yuvData,bitmap.getWidth(),bitmap.getHeight());
+                    YuvUtils.RgbaToI420(Key.ARGB_TO_I420,buffer.array(),yuvData,bitmap.getWidth(),bitmap.getHeight());
 //                    rgbToYuv(buffer.array(),bitmap.getWidth(),bitmap.getHeight(),yuvData);
                     Log.e("wuwang","width*height:"+bitmap.getWidth()+"/"+bitmap.getHeight());
                     os.write(yuvData);
